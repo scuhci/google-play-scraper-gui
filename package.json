@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src --color",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "start": "electron ."
   },
   "keywords": [],
   "author": "javab3ans",
@@ -15,8 +16,8 @@
     "google-play-scraper": "^9.1.0"
   },
   "devDependencies": {
-    "electron-builder": "^22.10.5",
-    "electron-prebuilt-compile": "8.2.0",
+    "electron": "^15.2.0",
+    "electron-builder": "^22.15.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.27.5",
@@ -29,13 +30,13 @@
   "homepage": "https://github.com/facundoolano/google-play-api#readme",
   "build": {
     "productName": "Google Play Scraper",
-    "win": {
-      "target": "nsis", 
-      "icon": "dist/icon.ico"
-    },
     "mac": {
-      "target": "dmg",  
-      "icon": "dist/icon.icns"
+      "target": "dmg",
+      "icon": "dist/icon.icns",
+      "arch": ["arm64"]
+    },
+    "dmg": {
+      "sign": false
     }
   }
 }
