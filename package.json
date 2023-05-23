@@ -30,13 +30,17 @@
   "homepage": "https://github.com/facundoolano/google-play-api#readme",
   "build": {
     "productName": "Google Play Scraper",
-    "mac": {
-      "target": "dmg",
-      "icon": "dist/icon.icns",
-      "arch": ["arm64"]
+    "win": {
+      "target": "nsis", 
+      "icon": "dist/icon.ico"
     },
-    "dmg": {
-      "sign": false
+    "mac": {
+      "target": [
+        "default",
+        "dmg",
+        "zip"
+      ],
+      "icon": "dist/icon.icns"
     }
   }
 }
