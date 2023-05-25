@@ -50,7 +50,7 @@
     "productName": "Google Play Scraper",
     "win": {
       "target": "nsis",
-      "icon": "dist/icon.ico"
+      "icon": "images/icon.ico"
     },
     "mac": {
       "target": [
@@ -58,7 +58,7 @@
         "dmg",
         "zip"
       ],
-      "icon": "dist/icon.icns"
+      "icon": "images/icon.icns"
     }
   }
 }
