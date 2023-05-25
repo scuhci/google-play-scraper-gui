@@ -108,6 +108,7 @@ ipcMain.on('get-similar-apps', async (event, appId) => {
 			  default: gplay.sort.TOP_FREE
 			},
 			sortByCategory: {
+				OVERALL: gplay.category.OVERALL,
 				APPLICATION: gplay.category.APPLICATION,
 				ANDROID_WEAR: gplay.category.ANDROID_WEAR,
 				ART_AND_DESIGN: gplay.category.ART_AND_DESIGN,
