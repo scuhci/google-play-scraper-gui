@@ -1,4 +1,4 @@
-# scu-hci-google-play-scraper
+# google-play-api-scraper-gui
 
 <p align="center">
   <img src="https://github.com/scuhci/google-play-api/assets/42426861/3b281c74-bb3c-4eaa-b2ba-3864ac12e121" width="50%" alt="google-play-scraper">

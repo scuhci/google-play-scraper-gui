@@ -1,5 +1,5 @@
 {
-  "name": "google-play-api",
+  "name": "google-play-scraper-gui",
   "version": "1.0.0",
   "description": "Node.JS Electron Google Play Scraper",
   "main": "src/index.js",
@@ -43,9 +43,9 @@
     "yargs-parser": ">=5.0.1"
   },
   "bugs": {
-    "url": "https://github.com/facundoolano/google-play-api/issues"
+    "url": "https://github.com/scuhci/google-play-scraper-gui/issues"
   },
-  "homepage": "https://github.com/facundoolano/google-play-api#readme",
+  "homepage": "https://github.com/scuhci/google-play-scraper-gui#readme",
   "build": {
     "productName": "Google Play Scraper",
     "win": {
