@@ -1,59 +1,85 @@
 const { app, BrowserWindow, ipcMain, session } = require("electron");
-const gplay = require("google-play-scraper"); // https://www.npmjs.com/package/google-play-scraper
+const gplay = require("google-play-scraper");
+const path = require("path");
+import("file-metadata").then(fileMetadata => {
+	// Use the fileMetadata module here
 
-// Set ELECTRON_DISABLE_SECURITY_WARNINGS environment variable
-process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
+	// Clear all extended attributes from the app executable
+	if (process.platform === 'darwin') {
+		const appPath = app.getAppPath();
+		const appExecutablePath = path.join(appPath, 'Contents', 'MacOS', app.getName());
+
+		fileMetadata.clearExtendedAttributes(appExecutablePath, (error, attrs) => {
+			if (error) {
+				console.error('Error clearing extended attributes:', error);
+				return;
+			}
+
+			attrs.forEach((attr) => {
+				console.log(`Cleared extended attribute: ${attr}`);
+			});
+
+			console.log('All extended attributes cleared successfully.');
+		});
+	} else {
+		console.log('Extended attribute clearing is only supported on macOS.');
+	}
+  }).catch(error => {
+	// Handle any error that occurs during the import
+	
+  });
+  
 
 function createWindow() {
-	const mainWindow = new BrowserWindow({
-		webPreferences: {
-			// Set the Content Security Policy for the renderer process
-			// Only allow content to be loaded from the same origin
-			// Disable inline script and eval functions
-			// Enable remote module (use with caution)
-			// See https://www.electronjs.org/docs/tutorial/security#6-enable-context-isolation-for-remote-content
-			// for more information about remote module and context isolation 
-			nodeIntegration: true, 
-			contextIsolation: false,
-			enableRemoteModule: true,
-			contentSecurityPolicy: "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'"
-		}
-	});
+  const mainWindow = new BrowserWindow({
+    webPreferences: {
+      // Set the Content Security Policy for the renderer process
+      // Only allow content to be loaded from the same origin
+      // Disable inline script and eval functions
+      // Enable remote module (use with caution)
+      // See https://www.electronjs.org/docs/tutorial/security#6-enable-context-isolation-for-remote-content
+      // for more information about remote module and context isolation 
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+      contentSecurityPolicy: "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'"
+    }
+  });
 
-	mainWindow.loadFile(__dirname + "/index.html");
-	
-	// make it so user can't use dev tools
-	mainWindow.webContents.on("devtools-opened", () => {
-		mainWindow.webContents.closeDevTools();
-	});
+  mainWindow.loadFile(__dirname + "/index.html");
 
-	// maximize the screen
-	mainWindow.maximize();
+  // Make it so the user can't use dev tools
+  mainWindow.webContents.on("devtools-opened", () => {
+    mainWindow.webContents.closeDevTools();
+  });
 
-	mainWindow.setMenuBarVisibility(false) // hide the menu bar
+  // Maximize the screen
+  mainWindow.maximize();
+
+  mainWindow.setMenuBarVisibility(false); // Hide the menu bar
 }
 
-app.whenReady().then(() => {
-	createWindow();
+app.whenReady().then(() => { 
+  createWindow();
 
-	app.on("ready", () => {
-		session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-			const newHeaders = Object.assign({}, details.responseHeaders, {
-				'Content-Security-Policy': ["default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'"],
-			});
-			callback({
-				responseHeaders: newHeaders
-			});
-		});
-	});
+  app.on("ready", () => {
+    session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+      const newHeaders = Object.assign({}, details.responseHeaders, {
+        'Content-Security-Policy': ["default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'"],
+      });
+      callback({
+        responseHeaders: newHeaders
+      });
+    });
+  });
 
-	app.on("activate", function() {
-		if (BrowserWindow.getAllWindows().length === 0) createWindow();
-	});
+  app.on("activate", function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
 
-app.on("window-all-closed", function() {
-	if (process.platform !== "darwin") app.quit();
+app.on("window-all-closed", function () {
+  if (process.platform !== "darwin") app.quit();
 });
 
 /* App Search */ 
