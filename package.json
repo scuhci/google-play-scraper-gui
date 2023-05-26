@@ -52,13 +52,14 @@
       "target": "nsis",
       "icon": "images/icon.ico"
     },
-    "mac": {
+    "mac": { 
       "target": [
         "default",
         "dmg",
         "zip"
       ],
-      "icon": "images/icon.icns"
+      "icon": "images/icon.icns",
+      "gatekeeperAssess": false
     }
   }
 }
