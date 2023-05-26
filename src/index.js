@@ -24,11 +24,12 @@ import("file-metadata").then(fileMetadata => {
 	} else {
 		console.log('Extended attribute clearing is only supported on macOS.');
 	}
-  }).catch(error => {
-	// Handle any error that occurs during the import
-	
-  });
-  
+  }).catch(
+	// Handle errors that may occur when importing the fileMetadata module
+	(error) => {
+		console.error('Error importing fileMetadata module:', error);
+	}
+	  );
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
