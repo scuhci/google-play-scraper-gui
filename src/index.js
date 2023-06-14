@@ -324,7 +324,7 @@ ipcMain.on('get-reviews', async (event, appId, sortBy) => { // Time Complexity: 
 	  } while (nextToken);
 	  
 	  if (!reviews.length) {
-		event.sender.send('app-error', 'No reviews found for app');
+		event.sender.send('app-error', 'Review information not found for app');
 		return;
 	  } 
 	  

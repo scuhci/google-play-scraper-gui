@@ -299,13 +299,7 @@ ipcRenderer.on("developer-results", async (event, developerApps, developerId) =>
 
 // Remove the buffer animation div from the DOM once reviews are fetched
 ipcRenderer.once("reviews-results", (event, reviewsData, appId) => {
-  console.log("Received reviews for app:", appId);
-
-  if (reviewsData.length === 0) {
-    // Remove buffer div from DOM if no reviews are returned
-    document.body.removeChild(bufferDiv);
-    return;
-  }
+  console.log("Received reviews for app:", appId); 
 
   reviewsData.forEach((review) => {
     if (review.replyDate === null) {
@@ -418,17 +412,18 @@ ipcRenderer.on("app-error", (event, errorMessage) => {
   console.error(errorMessage);
 
   // Show error message in tooltip
-  developer.errorTooltip.innerText = errorMessage;
- 
+  const errorTooltip = document.getElementById("error-tooltip");
+  errorTooltip.innerText = errorMessage;
+
   if (errorMessage === "Cannot read property 'map' of null") {
-    developer.errorTooltip.innerText = "No apps found";
+    errorTooltip.innerText = "No apps found";
   }
 
-  developer.errorTooltip.style.visibility = "visible";
+  errorTooltip.style.visibility = "visible";
 
   // Remove the buffer animation div from the DOM
   const bufferDiv = document.getElementById("buffer-div");
   if (bufferDiv) {
-    document.body.removeChild(bufferDiv);
+    bufferDiv.parentNode.removeChild(bufferDiv);
   }
-});  
+});
